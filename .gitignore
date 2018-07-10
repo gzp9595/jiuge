@@ -102,3 +102,19 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+algorithm/config.py
+algorithm/generate_first.py
+algorithm/generate_sens.py
+algorithm/main_CT.py
+algorithm/main_JJ.py
+algorithm/main_JJJ.py
+algorithm/neighbor.txt
+algorithm/prom_inter.py
+algorithm/setting.py
+algorithm/untils.py
+outfile/out0915.csv
+share/background.zip
+share/new
+share/11
+share/background
+

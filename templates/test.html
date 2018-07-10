@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=600">
+    <title>九歌——计算机古诗创作系统</title>
+    <script language="javascript" type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/reset.css" rel="stylesheet">
+    <link href="/css/zdialog.css" rel="stylesheet">
+    <link href="/css/hint.css" rel="stylesheet">
+    <link href="/css/tooltipster.bundle.min.css" media="all" rel="stylesheet" type="text/css" />
+    <script language="javascript" type="text/javascript" src="/js/zdialog.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/tooltipster.bundle.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(init);
+
+    function init() {
+        $('#button_yes').click(update);
+        $("#user_input").bind("keydown", function(e) {
+            var event = e || window.event;
+            var code = event.keyCode || event.which || event.charCode;
+            if (code == '\n'.charCodeAt(0) || code == '\r'.charCodeAt(0)) {
+                e.preventDefault();
+                $('#button_yes').click();
+            }
+        }).focus();
+    }
+
+    function update() {
+        var this_head = $('#keyword')[0].value;
+        this_head = this_head.trim();
+        var this_type = $("#type").val();
+
+        for (var i = 0; i < this_head.length; i++) {
+            if (encodeURI(this_head[i]).length != 9)
+                all_chinese = false;
+        }
+        if (!all_chinese) {
+            show_strings(['只能输入汉字']);
+        } else {
+            send_poem(this_type, this_head);
+        }
+
+    }
+
+    function send_poem(this_type, this_head) {
+        var show = $('#poem');
+        show.empty();
+        show.append($('正在为您创作...'));
+        var apiurl = 'sendPoem';
+        $.ajax({
+            url: apiurl,
+            method: 'POST',
+            data: { type: this_type, keyword: this_head },
+            success: function(data) {
+                show.empty();
+                if (data == "mgc") {
+                    show.append($('该主题词无法成诗</br>请重新选择主题词'));
+                    return;
+                }
+                var ans = eval('(' + data + ')');
+                show.empty();
+                for (var i = 0; i < v.length; i++) {
+                    show.append($(v[i]+"</br>"))
+                }
+            },
+            error: function(e) {
+                show.append($('服务器错误</br>请稍候再试'));
+                // star_show();
+            },
+        });
+    }
+    </script>
+    <!-- <script language="javascript" type="text/javascript"> -->
+    <!-- </script> -->
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <h3 class="text-center">
+                九歌测试网站
+            </h3>
+                <form>
+                    <fieldset>
+                        <label>请输入关键词：</label>
+                        <input id="keyword" type="text" /> <span class="help-block">输入最多四个关键词, 每个关键词1-2个字</span>
+                        <label>请选择生成的诗词类型：</label>
+                        <select id="type">
+                            <option value="0">五言绝句</option>
+                            <option value="1">七言绝句</option>
+                            <option value="2">宋词, 如梦令</option>
+                            <option value="3">宋词, 踏莎行</option>
+                            <option value="4">宋词, 点绛唇</option>
+                            <option value="5">宋词, 捣练子</option>
+                            <option value="6">宋词, 忆江南</option>
+                        </select>
+                        </br>
+                        <button type="submit" class="btn" id="button_yes">生成</button>
+                    </fieldset>
+                </form>
+                <div id='poem'></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

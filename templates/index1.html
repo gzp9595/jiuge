@@ -1,0 +1,211 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=600">
+    <title>九歌——计算机古诗创作系统</title>
+    <script language="javascript" type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/reset.css" rel="stylesheet">
+    <link href="/css/zdialog.css" rel="stylesheet">
+    <link href="css/hint.css" rel="stylesheet">
+    <link href="css/tooltipster.bundle.min.css" media="all" rel="stylesheet" type="text/css" />
+    <script language="javascript" type="text/javascript" src="/js/zdialog.js"></script>
+    <script language="javascript" type="text/javascript" src="js/tooltipster.bundle.min.js"></script>
+    <script language="javascript" type="text/javascript" src="/js/script.js"></script>
+    <!-- <script language="javascript" type="text/javascript"> -->
+    <!-- </script> -->
+    <style type="text/css">
+    body {
+        background-repeat: no-repeat;
+        background-position: top;
+        background-image: url('/images/new-middle.png');
+        background-color: #EEEDEC;
+        margin: 0;
+    }
+
+    .container-style {
+        width: 600px;
+        margin: auto;
+        text-align: center;
+    }
+
+    .non-selectable {
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        user-select: none;
+    }
+
+    .action_selector,
+    .action_selector.checked {
+        cursor: pointer;
+    }
+
+    .type_selector {
+        /*color: rgb(147, 81, 62);*/
+        background: none;
+        /*font-family: 黑体;*/
+        /*font-size: 24px;*/
+        /*padding: 8px 12px 8px 12px;*/
+        cursor: pointer;
+    }
+
+    .type_selector.checked {
+        color: white;
+        background-color: rgb(147, 81, 62);
+    }
+
+    #SectionUnderGround {
+        background-color: rgba(238, 238, 238, 0.55);
+        position: relative;
+    }
+
+    .FooterInfoArea {
+        position: relative;
+        /*width: 981px;*/
+        margin: 0 auto 0 auto;
+        height: auto;
+        text-align: center;
+        padding: 10px 0 10px 0;
+    }
+
+    #FooterLinks {
+        text-align: left;
+        font-size: 13px;
+    }
+
+    #FooterLinks a,
+    #FooterLinks span {
+        color: #5a5a5a;
+        padding: 0 4px 0 4px;
+    }
+
+    #FooterLinks a:visited {
+        color: #5a5a5a;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container-style" align="center">
+        <div style="height: 25px;"></div>
+        <div style="height: 220px;">
+            <img src="/images/logo.png" style="position: relative; left: 100px;" />
+            <img src="/images/micrologo.png" style="position: relative; top: 60px; left: 90px;" />
+        </div>
+        <div class="non-selectable" style="height: 80px;">
+            <div style="">
+                <!-- <span class="type_selector" panel-toggle="panel-gathered">集句诗</span>
+                <span class="type_selector checked" panel-toggle="panel-head">绝&nbsp;&nbsp;句</span>
+                <span class="type_selector" panel-toggle="panel-regular">藏头诗</span> -->
+                <img src="/images/jiju.png" class="type_selector" panel-toggle="panel-gathered" id="jiju" />
+                <img src="/images/jueju_checked.png" class="type_selector checked" panel-toggle="panel-head" id="jueju" />
+                <img src="/images/cangtou.png" class="type_selector" panel-toggle="panel-regular" id="cangtou" />
+            </div>
+        </div>
+        <div class="option-panel panel-head">
+            <div class="non-selectable" style="height: 50px;">
+                <!-- <span class="action_selector yan_selector panel-head checked" id="yan_5">五言</span>
+                <span class="action_selector yan_selector" id="yan_7">七言</span> -->
+                <img src="/images/yan5.png" class="action_selector yan_selector yan5" yan="5" id="yan5_JJ" />
+                <img src="/images/yan7_checked.png" class="action_selector yan_selector panel-head yan7 checked" yan="7" id="yan7_JJ" />
+            </div>
+            <div style="height: 100px;">
+                <div style="margin: auto; position: relative; left: 0px; top: 30px; height: 57px;"></div>
+                <div class="non-selectable" style="width: 150px; height: 44px; font-family: 黑体; font-size: 27px; color: #FFFFFF; line-height: 47px; margin: auto; position: relative; top: -25px; left: 205px; cursor: pointer; background-color: #C12A2B" id="button_yes"><span>作&nbsp;诗</span></div>
+                <div style="width: 400px; font-family: 'Microsoft YaHei'; position: relative; top: -69px; left: 41px;border:3px solid #C12A2B; background-color: #FFFFFF">
+                    <input id="user_input" placeholder="请输入主题词" type="text" style="margin-left:10px;outline: none; width: 100%; height: 38px; border: none; font-size: 15pt; background-color: transparent" />
+                </div>
+            </div>
+        </div>
+        <div class="option-panel panel-gathered" hidden>
+            <div class="non-selectable" style="height: 50px;">
+                <!-- <span class="action_selector yan_selector panel-gathered" id="yan_5">五言</span>
+                <span class="action_selector yan_selector" id="yan_7">七言</span> -->
+                <img src="/images/yan5.png" class="action_selector yan_selector yan5" yan="5" id="yan5_JJJ" />
+                <img src="/images/yan7_checked.png" class="action_selector yan_selector panel-gathered yan7 checked" yan="7" id="yan7_JJJ" />
+            </div>
+            <div style="height: 100px;">
+                <div style="margin: auto; position: relative; left: 0px; top: 30px; height: 57px;"></div>
+                <div class="non-selectable" style="width: 150px; height: 44px; font-family: 黑体; font-size: 27px; color: #FFFFFF; line-height: 47px; margin: auto; position: relative; top: -25px; left: 205px; cursor: pointer; background-color: #C12A2B" id="button_yes2"><span>作&nbsp;诗</span></div>
+                <div style="width: 400px; font-family: 'Microsoft YaHei'; position: relative; top: -69px; left: 41px;border:3px solid #C12A2B; background-color: #FFFFFF">
+                    <input id="user_input2" placeholder="请输入首句" type="text" style="margin-left:10px;outline: none; width: 100%; height: 38px; border: none; font-size: 15pt; background-color: transparent" />
+                </div>
+            </div>
+        </div>
+        <div class="option-panel panel-regular" hidden>
+            <div class="non-selectable" style="height: 50px;">
+                <!-- <span class="action_selector yan_selector panel-regular" id="yan_5">五言</span>
+                <span class="action_selector yan_selector" id="yan_7">七言</span> -->
+                <img src="/images/yan5.png" class="action_selector yan_selector yan5" yan="5" id="yan5_CT" />
+                <img src="/images/yan7_checked.png" class="action_selector yan_selector panel-regular yan7 checked" yan="7" id="yan7_CT" />
+            </div>
+            <div style="height: 100px;">
+                <div style="margin: auto; position: relative; left: 0px; top: 30px; height: 57px;"></div>
+                <div class="non-selectable" style="width: 150px; height: 44px; font-family: 黑体; font-size: 27px; color: #FFFFFF; line-height: 47px; margin: auto; position: relative; top: -25px; left: 205px; cursor: pointer; background-color: #C12A2B" id="button_yes3"><span>作&nbsp;诗</span></div>
+                <div style="width: 400px; font-family: 'Microsoft YaHei'; position: relative; top: -69px; left: 41px;border:3px solid #C12A2B; background-color: #FFFFFF">
+                    <input id="user_input3" placeholder="请输入四个嵌首字" type="text" style="margin-left:10px;outline: none; width: 100%; height: 38px; border: none; font-size: 15pt; background-color: transparent" />
+                </div>
+            </div>
+        </div>
+        <div id="div_popular_question" style="background-image: url('/images/hot words_28.png'); height: 300px; width: 600px; position: relative; left: -78px;">
+            <table id="poem_show" cellpadding="0" cellspacing="0" style="width: 260px; height: 250px; position: relative; left: 245px; top: 25px; font-family: KaiTi; font-size: 22pt;">
+                <tr>
+                    <td>请</td>
+                    <td>输</td>
+                    <td>入</td>
+                    <td>．</td>
+                    <td>．</td>
+                    <td>．</td>
+                    <!-- <td>&nbsp;</td>
+                    <td>&nbsp;</td> -->
+                </tr>
+            </table>
+        </div>
+        <div id="kongbai" style="height: 30px; width: auto; position: relative;">
+        </div>
+        <div id="div_share" style="height: 50px; width: auto; position: relative;">
+            <span style="cursor: pointer;clear:both;font-size: 20px;color:#BF2C30; border-style:solid; border-width:1.5px;" id="button_share">生成图片并分享</span>
+            <div style="height: 20px; width: auto; position: relative;">
+            </div>
+        </div>
+        <div class="xzw_starSys" hidden>
+            <div style="clear:both;height: 30px;font-size: 18px;color:#3232d6;text-decoration: underline;" id="star_title">请对本首诗打分</div>
+            <div class="xzw_starBox">
+                <ul class="star stars">
+                    <li><a href="javascript:void(0)" title="1" class="one-star">1</a></li>
+                    <li><a href="javascript:void(0)" title="2" class="two-stars">2</a></li>
+                    <li><a href="javascript:void(0)" title="3" class="three-stars">3</a></li>
+                    <li><a href="javascript:void(0)" title="4" class="four-stars">4</a></li>
+                    <li><a href="javascript:void(0)" title="5" class="five-stars">5</a></li>
+                </ul>
+                <div class="current-rating showb" style="width: 0px;"></div>
+            </div>
+            <!--评价文字-->
+            <div class="description"> </div>
+        </div>
+    </div>
+    <!-- <div style="height: 40px; width: auto; position: relative;"> -->
+    <!-- </div> -->
+    <div id="SectionUnderGround">
+        <div class="FooterInfoArea">
+            <img src="/images/jiuge_erwei.png" height="92" width="100" />
+            <img src="/images/new_logo.png" height="92" width="100" />
+            <img src="/images/erwei_logo.png" height="92" width="100" />
+        </div>
+        <div class="FooterInfoArea">
+            <span id="FooterLinks">
+                <span>九歌——计算机古诗创作系统</span>
+            <br>
+            <span>清华大学自然语言处理与社会人文计算实验室</span>
+            <br>
+            <span>© 2017 THUNLP 版权所有</span>|<a>关于我们</a>|<a title="" id="test">关于系统</a>
+            </span>
+        </div>
+    </div>
+</body>
+
+</html>
