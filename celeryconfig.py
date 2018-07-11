@@ -12,6 +12,7 @@ task_queues = (
     Queue('JJ1',  exchange=Exchange('priority', type='direct'), routing_key='JJ'),
     Queue('JJJ',  exchange=Exchange('priority', type='direct'), routing_key='JJJ'),
     Queue('CT',  exchange=Exchange('priority', type='direct'), routing_key='CT'),
+    Queue('SC',  exchange=Exchange('priority', type='direct'), routing_key='SC'),
 )
 
 task_routes = ([
@@ -19,4 +20,5 @@ task_routes = ([
     ('tasks.main_JJ1', {'queue': 'JJ1'}),
     ('tasks.main_JJJ', {'queue': 'JJJ'}),
     ('tasks.main_CT', {'queue': 'CT'}),
+    ('tasks.main_CT', {'queue': 'SC'}),
 ],)
