@@ -105,7 +105,7 @@ def sendProm():
             if('0' <= i <= '9' or 'a' <= i <= 'z'):
                 return "mgc"
     if(s['type'] == u'SC'):
-        if(len(s['keyword']) > 4):
+        if(len(s['keyword'].split(" ")) > 4):
             return "mgc"
     #print(s['keyword'].encode("utf-8"))
     #for i in s['keyword'].decode("utf-8"):
