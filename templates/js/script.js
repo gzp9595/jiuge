@@ -197,7 +197,7 @@ function check_songci(this_yan, this_head) {
                 }
             } else {
                 var tmp_sc = ans.content;
-                // console.log(ans);
+                console.log(tmp_sc);
                 show_songci(tmp_sc);
                 window.clearInterval(timeid);
                 in_progress = false;
