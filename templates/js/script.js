@@ -120,15 +120,15 @@ function update_songci() {
     }
     for (var i = 0; i < this_head.length; i++)
         var head = this_head[i];
-        var head_len = head.length;
-        if(head_len > 2) {
-            show_songci(['词长度超过2']);
-            return;
-        }
-        for (var j = 0; j < head_len; j++) {
-            if (encodeURI(head[j]).length != 9)
-                all_chinese = false;
-        }
+    var head_len = head.length;
+    if (head_len > 2) {
+        show_songci(['词长度超过2']);
+        return;
+    }
+    for (var j = 0; j < head_len; j++) {
+        if (encodeURI(head[j]).length != 9)
+            all_chinese = false;
+    }
     if (!all_chinese) {
         show_songci(['只能输入汉字']);
     } else if (in_progress) {
@@ -152,7 +152,7 @@ function send_songci(this_yan, this_head) {
     $.ajax({
         url: apiurl,
         method: 'POST',
-        data: {type: "SC", yan: this_yan, keyword: this_head, user_id: user_id},
+        data: { type: "SC", yan: this_yan, keyword: this_head, user_id: user_id },
         success: function(data) {
             if (data == "mgc") {
                 show_songci(['该主题词无法成词', '请重新选择主题词']);
@@ -494,10 +494,16 @@ function show_songci(v) {
     for (var i = 0; i < v.length; i++) {
         var tr = $('<tr></tr>');
         var s = v[i];
-        for (var j = 0; j < s.length; j++) {
+        if (s == '-') {
             var td = $('<td></td>');
-            td.text(s[j]);
+            td.text('<br>');
             tr.append(td);
+        } else {
+            for (var j = 0; j < s.length; j++) {
+                var td = $('<td></td>');
+                td.text(s[j]);
+                tr.append(td);
+            }
         }
         show.append(tr);
     }
