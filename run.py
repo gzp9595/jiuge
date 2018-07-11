@@ -236,7 +236,10 @@ def getProm():
                 if(s['type'] != "SC"):
                     ans['content'] = tmp['content'].split("\t")
                 else:
-                    ans['content'] = tmp['content']
+                    if(len(tmp['content']) == 1):
+                        ans['content'] = tmp['content'][0]
+                    else:
+                        ans['content'] = tmp['content'][0] + ['<br>'] + tmp['content'][1]
 
                 if(tmp['code'] == 1):
                     ans['source'] = tmp['source']
