@@ -495,9 +495,7 @@ function show_songci(v) {
         var tr = $('<tr></tr>');
         var s = v[i];
         if (s == '-') {
-            var td = $('<td></td>');
-            td.text('<br>');
-            tr.append(td);
+            tr.append('<br>');
         } else {
             for (var j = 0; j < s.length; j++) {
                 var td = $('<td></td>');
