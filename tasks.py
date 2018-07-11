@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import celery
-import kombu
 import time
 import json
 import sys
