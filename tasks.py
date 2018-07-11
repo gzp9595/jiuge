@@ -202,8 +202,8 @@ def main_JJ1(prom_old):
 def main_SC(prom_old):
     global songci
     if(songci == None):
-        sys.path.append("/var/jiuge/Algorithm/")
-        os.chdir("/var/jiuge/Algorithm/")
+        sys.path.append("/root/jiuge_test/")
+        os.chdir("/root/jiuge_test/")
         from Core.PoetryUI import PoetryUI
         songci = PoetryUI()
     prom = json.loads(prom_old)
