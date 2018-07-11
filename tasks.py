@@ -217,7 +217,7 @@ def main_SC(prom_old):
     # state = JJ_code[int(random.random()*5)]
     # print "state:", state
     try:
-        ans, info = songci.generate((" ".join(type_top['top'])).encode("utf-8"), int(type_top['yan']))
+        ans, info = songci.generate((" ".join(type_top['top'])).encode("utf-8"), int(type_top['yan'])+2)
         print ans
     except Exception as e:
         print e
