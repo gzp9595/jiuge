@@ -111,7 +111,7 @@ function update_songci() {
         return;
     var this_head = $('#user_input_songci')[0].value;
     this_head = this_head.trim().split(" ");
-    var cipai = $('#cipai_select').val();
+    var cipai = $('#cipai_select').attr('value');
 
     var all_chinese = true;
     if (this_head.length > 4) {
