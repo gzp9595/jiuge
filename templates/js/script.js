@@ -124,6 +124,7 @@ function update_songci() {
             show_songci(['词长度超过2']);
             return;
         }
+        console.log(this_head[i][0])；
         for (var j = 0; j < head_len; j++) {
             if (encodeURI(this_head[i][j]).length != 9)
                 all_chinese = false;
