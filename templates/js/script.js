@@ -149,8 +149,9 @@ function send_songci(this_yan, this_head) {
     $(".xzw_starSys").hide();
     $("#div_share").hide();
     $("#kongbai").css("height", "30px");
-    show.attr("height", "350px");
-    show.attr("top", "25px");
+    show.css("height", "350px");
+    show.css("top", "25px");
+    show.css("font-size", "16pt");
     $.ajax({
         url: apiurl,
         method: 'POST',
@@ -507,8 +508,17 @@ function show_songci(v) {
         }
         show.append(tr);
     }
-    show.attr("height", "350px");
-    show.attr("top", "25px");
+    var ll = 350 - (15-v.length) * 6;
+    var ll1 = 25 + (15-v.length) * 3;
+    var size = "20pt";
+    if(v.length > 10) {
+        ll = 350;
+        ll1 = 25;
+        size = "16pt";
+    }
+    show.css("height", String(ll)+"px");
+    show.css("top", String(ll1)+"px");
+    show.css("font-size", "20pt");
 }
 
 function show_strings_chuchu(v, vv) {
