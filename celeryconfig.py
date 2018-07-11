@@ -20,5 +20,5 @@ task_routes = ([
     ('tasks.main_JJ1', {'queue': 'JJ1'}),
     ('tasks.main_JJJ', {'queue': 'JJJ'}),
     ('tasks.main_CT', {'queue': 'CT'}),
-    ('tasks.main_CT', {'queue': 'SC'}),
+    ('tasks.main_SC', {'queue': 'SC'}),
 ],)
