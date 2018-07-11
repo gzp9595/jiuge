@@ -109,8 +109,8 @@ function share() {
 function update_songci() {
     if (!$('#user_input_songci')[0].value)
         return;
-    var this_head = $('#user_input_songci')[0].value;
-    this_head = this_head.trim().split(" ");
+    var this_head_tmp = $('#user_input_songci')[0].value;
+    this_head = this_head_tmp.trim().split(" ");
     var cipai = $('#cipai_select').attr('value');
 
     var all_chinese = true;
@@ -132,9 +132,9 @@ function update_songci() {
     if (!all_chinese) {
         show_songci(['只能输入汉字']);
     } else if (in_progress) {
-        check_songci(cipai, this_head);
+        check_songci(cipai, this_head_tmp.trim());
     } else {
-        send_songci(cipai, this_head);
+        send_songci(cipai, this_head_tmp.trim());
     }
 }
 
