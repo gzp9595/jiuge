@@ -16,6 +16,7 @@ generater = None
 jiju = None
 ui = None
 firstgen = None
+songci = None
 
 JJ_code = [-1, 1, 2, 4, 7, 1]
 yc = json.loads(open("/var/yc.txt").readline())
@@ -32,7 +33,7 @@ class CallbackTask(celery.Task):
     def on_failure(self, exc, task_id, args, kwargs, einfo):
         pass
 
-@app.task(base=CallbackTask) 
+@app.task(base=CallbackTask)
 def main_CT(prom_old):
     global generater
     if(generater == None):
@@ -71,7 +72,7 @@ def main_CT(prom_old):
     prom['result'] = prom_result
     return json.dumps(prom)
 
-@app.task(base=CallbackTask) 
+@app.task(base=CallbackTask)
 def main_JJJ(prom_old):
     global jiju
     if(jiju == None):
@@ -116,7 +117,7 @@ def main_JJJ(prom_old):
     return json.dumps(prom)
 
 
-@app.task(base=CallbackTask) 
+@app.task(base=CallbackTask)
 def main_JJ(prom_old):
     global myUI
     if(myUI == None):
@@ -153,7 +154,7 @@ def main_JJ(prom_old):
     prom['result'] = prom_result
     return json.dumps(prom)
 
-@app.task(base=CallbackTask) 
+@app.task(base=CallbackTask)
 def main_JJ1(prom_old):
     global firstgen
     global ui
@@ -194,5 +195,38 @@ def main_JJ1(prom_old):
         print info
         poems = [['该主题词无法成诗', '请重新选择主题词']]
     prom_result = {"code": 0, "content": "\t".join(poems[0]), "state": state, "type": 1}
+    prom['result'] = prom_result
+    return json.dumps(prom)
+
+@app.task(base=CallbackTask)
+def main_SC(prom_old):
+    global songci
+    if(songci == None):
+        sys.path.append("/var/jiuge/Algorithm/")
+        os.chdir("/var/jiuge/Algorithm/")
+        from Core.PoetryUI import PoetryUI
+        songci = PoetryUI()
+    prom = json.loads(prom_old)
+    print(prom)
+    # if(not prom['used'] == None):
+    #     prom['result'] = json.loads(prom['used'])
+    #     prom['used'] = 'True'
+    #     return json.dumps(prom)
+    type_top = prom['type_top']
+    tmp = type_top['top']+type_top['yan']
+    # prom_result = 'test\ttest'
+    # state = JJ_code[int(random.random()*5)]
+    # print "state:", state
+    try:
+        ans, info = songci.generate((" ".join(type_top['top'])).encode("utf-8"), int(type_top['yan']))
+        print ans
+    except Exception as e:
+        print e
+        poems = []
+        info = "Error"
+    if(len(ans) == 0):
+        print info
+        poems = [['该主题词无法成词', '请重新选择主题词']]
+    prom_result = {"code": 0, "content": poems}
     prom['result'] = prom_result
     return json.dumps(prom)

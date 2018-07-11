@@ -230,8 +230,10 @@ def getProm():
             if(status == 'SUCCESS'):
                 prom = json.loads(result.result)
                 tmp = prom['result']
-                ans['content'] = tmp['content'].split("\t")
                 print(ans['content'])
+                if(s['type'] != "SC"):
+                    ans['content'] = tmp['content'].split("\t")
+
                 if(tmp['code'] == 1):
                     ans['source'] = tmp['source']
                 if('type' in tmp):
