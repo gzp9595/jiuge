@@ -217,6 +217,7 @@ function update() {
     var this_yan = null;
     this_head = this_head.trim();
     if ($('#yan5_JJ').hasClass('checked')) this_yan = 5;
+    if ($('#yan7_JJ').hasClass('checked')) this_yan = 7;
     console.log(this_yan);
 
     var all_chinese = true;
