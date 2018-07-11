@@ -226,6 +226,6 @@ def main_SC(prom_old):
     if(len(ans) == 0):
         print info
         poems = [['该主题词无法成词', '请重新选择主题词']]
-    prom_result = {"code": 0, "content": poems}
+    prom_result = {"code": 0, "content": ans}
     prom['result'] = prom_result
     return json.dumps(prom)
