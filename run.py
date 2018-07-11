@@ -172,6 +172,7 @@ def sendProm():
             elif(s['type'] == "JJJ"):
                 cele = main_JJJ.delay(json.dumps(poem))
             elif(s['type'] == "SC"):
+                print(123)
                 cele = main_SC.delay(json.dumps(poem))
             print(cele.task_id)
 
