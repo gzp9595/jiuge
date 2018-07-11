@@ -141,14 +141,16 @@ function update_songci() {
 function send_songci(this_yan, this_head) {
     var show = $('#sc_show');
     show.empty();
-    var div = $('<div><img/></div>');
+    var div = $('<div style="top:30px"><img/></div>');
     div.find('img').attr('src', 'images/waiting.gif');
     show.append(div);
-    show.append($('<div>正在为您创作...</div>'));
+    show.append($('<div style="top:10px; font-size:20pt;">正在为您创作...</div>'));
     var apiurl = 'sendPoem';
     $(".xzw_starSys").hide();
     $("#div_share").hide();
     $("#kongbai").css("height", "30px");
+    show.attr("height", "350px");
+    show.attr("top", "25px");
     $.ajax({
         url: apiurl,
         method: 'POST',
@@ -188,12 +190,12 @@ function check_songci(this_yan, this_head) {
             var show = $('#sc_show');
             show.empty();
             if (ans.code == '0') {
-                var div = $('<div><img/></div>');
+                var div = $('<div style="top:30px"><img/></div>');
                 div.find('img').attr('src', 'images/waiting.gif');
                 show.append(div);
-                show.append($('<div>正在为您创作...</div>'));
+                show.append($('<div style="top:10px; font-size:20pt;">正在为您创作...</div>'));
                 if (ans['content'] != '0') {
-                    show.append($('<div>还有' + ans['content'] + '首排队...</div>'));
+                    show.append($('<div style="top:10px; font-size:20pt;">还有' + ans['content'] + '首排队...</div>'));
                 }
             } else {
                 var tmp_sc = ans.content;
@@ -505,6 +507,9 @@ function show_songci(v) {
         }
         show.append(tr);
     }
+    if()
+    show.attr("height", "350px");
+    show.attr("top", "25px");
 }
 
 function show_strings_chuchu(v, vv) {
