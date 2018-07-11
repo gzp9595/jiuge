@@ -166,7 +166,7 @@ function send_songci(this_yan, this_head) {
             if (Number(data) < 0) {
                 data = '0';
             }
-            show.append($('<div>还有' + data + '首排队...</div>'));
+            show.append($('<div style="font-size:20pt;">还有' + data + '首排队...</div>'));
             timeid = window.setInterval(function() {
                 check_songci(this_yan, this_head);
             }, 500);
@@ -200,7 +200,6 @@ function check_songci(this_yan, this_head) {
                 }
             } else {
                 var tmp_sc = ans.content;
-                console.log(tmp_sc);
                 show_songci(tmp_sc);
                 window.clearInterval(timeid);
                 in_progress = false;
@@ -518,7 +517,7 @@ function show_songci(v) {
     }
     show.css("height", String(ll)+"px");
     show.css("top", String(ll1)+"px");
-    show.css("font-size", "20pt");
+    show.css("font-size", size);
 }
 
 function show_strings_chuchu(v, vv) {
