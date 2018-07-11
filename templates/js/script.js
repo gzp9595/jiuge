@@ -119,11 +119,12 @@ function update_songci() {
         return;
     }
     for (var i = 0; i < this_head.length; i++)
-        if(this_head[i].length > 2) {
+        var head_len = this_head[i].length;
+        if(head_len > 2) {
             show_songci(['词长度超过2']);
             return;
         }
-        for (var j = 0; j < this_head[i].length; j++) {
+        for (var j = 0; j < head_len; j++) {
             if (encodeURI(this_head[i][j]).length != 9)
                 all_chinese = false;
         }
