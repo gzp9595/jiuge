@@ -104,6 +104,9 @@ def sendProm():
         for i in s['keyword']:
             if('0' <= i <= '9' or 'a' <= i <= 'z'):
                 return "mgc"
+    if(s['type'] == u'SC'):
+        if(len(s['keyword']) > 4):
+            return "mgc"
     #print(s['keyword'].encode("utf-8"))
     #for i in s['keyword'].decode("utf-8"):
         #if(not (u'\\u4e00' <= i <= u'\\u9fa5')):
@@ -168,6 +171,8 @@ def sendProm():
                 cele = main_CT.delay(json.dumps(poem))
             elif(s['type'] == "JJJ"):
                 cele = main_JJJ.delay(json.dumps(poem))
+            elif(s['type'] == "SC"):
+                cele = main_SC.delay(json.dumps(poem))
             print(cele.task_id)
 
             cursor.execute('insert into list_'+s['type']+'(id, user_id, status) values(null, %s, %s)', (s['user_id'], "PENDING"))

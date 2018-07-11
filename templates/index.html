@@ -88,11 +88,11 @@
     }
 
     .new {
-        width: 180px;
+        width: 126px;
         position: absolute;
-        border: 1px solid #CCC;
+        /*border: 1px solid #CCC;*/
         color: #BB2321;
-        margin-left: 145px;
+        margin-left: 328px;
         text-align: center;
         background-color: #FFFFFF;
         display: none;
@@ -126,8 +126,8 @@
                 <span class="type_selector checked" panel-toggle="panel-head">绝&nbsp;&nbsp;句</span>
                 <span class="type_selector" panel-toggle="panel-regular">藏头诗</span> -->
                 <img src="images/jiju.png" class="type_selector" panel-toggle="panel-gathered" id="jiju" />
-                <img src="images/jueju_checked.png" class="type_selector checked" panel-toggle="panel-head" id="jueju" />
-                <img src="images/songci.png" class="type_selector" panel-toggle="panel-regular" id="songci" />
+                <img src="images/jueju.png" class="type_selector " panel-toggle="panel-head" id="jueju" />
+                <img src="images/songci_checked.png" class="type_selector checked" panel-toggle="panel-songci" id="songci" />
                 <img src="images/cangtou.png" class="type_selector" panel-toggle="panel-regular" id="cangtou" />
             </div>
         </div>
@@ -135,7 +135,8 @@
             <div class="non-selectable" style="height: 50px;">
                 <!-- <span class="action_selector yan_selector panel-head checked" id="yan_5">五言</span>
                 <span class="action_selector yan_selector" id="yan_7">七言</span> -->
-                <img src="images/cipai.png" class="action_selector cipai_selector" id='cipai_select' />
+                <img src="images/cipai.png" class="action_selector" />
+                <img src="images/cipai1.png" class="action_selector cipai_selector" value='1' id='cipai_select'/>
                 <ul class="new">
                     <li value="1">归字谣</li>
                     <li value="2">如梦令</li>
@@ -158,13 +159,12 @@
                     <li value="19">苏幕遮</li>
                     <li value="20">蝶恋花</li>
                 </ul>
-                <img src="images/cipai1.png" class="action_selector cipai_selector" />
             </div>
             <div style="height: 100px;">
                 <div style="margin: auto; position: relative; left: 0px; top: 30px; height: 57px;"></div>
-                <div class="non-selectable" style="width: 150px; height: 44px; font-family: 黑体; font-size: 27px; color: #FFFFFF; line-height: 47px; margin: auto; position: relative; top: -25px; left: 205px; cursor: pointer; background-color: #C12A2B" id="button_yes"><span>作&nbsp;诗</span></div>
+                <div class="non-selectable" style="width: 150px; height: 44px; font-family: 黑体; font-size: 27px; color: #FFFFFF; line-height: 47px; margin: auto; position: relative; top: -25px; left: 205px; cursor: pointer; background-color: #C12A2B" id="button_songci"><span>作&nbsp;词</span></div>
                 <div style="width: 400px; font-family: 'Microsoft YaHei'; position: relative; top: -69px; left: 41px;border:3px solid #C12A2B; background-color: #FFFFFF">
-                    <input id="user_input" placeholder="请输入主题词" type="text" style="margin-left:10px;outline: none; width: 100%; height: 38px; border: none; font-size: 15pt; background-color: transparent" />
+                    <input id="user_input_songci" placeholder="请输入主题词，每个词1-2字，空格间隔" type="text" style="margin-left:10px;outline: none; width: 100%; height: 38px; border: none; font-size: 15pt; background-color: transparent" />
                 </div>
             </div>
         </div>
@@ -213,7 +213,7 @@
                 </div>
             </div>
         </div>
-        <div id="div_popular_question" style="background-image: url('images/hot words_28.png'); height: 300px; width: 600px; position: relative; left: -78px;">
+        <div id="popular_poem" class="show_div panel-gathered panel-regular panel-head" style="background-image: url('images/hot words_28.png'); height: 300px; width: 600px; position: relative; left: -78px;" hidden>
             <table id="poem_show" cellpadding="0" cellspacing="0" style="width: 260px; height: 250px; position: relative; left: 245px; top: 25px; font-family: KaiTi; font-size: 22pt;">
                 <tr>
                     <td>请</td>
@@ -222,9 +222,28 @@
                     <td>．</td>
                     <td>．</td>
                     <td>．</td>
-                    <!-- <td>&nbsp;</td>
-                    <td>&nbsp;</td> -->
                 </tr>
+
+            </table>
+
+        </div>
+        <div id="popular_songci" class="show_div panel-songci" style="background-image: url('images/frame2.png'); height: 400px; width: 600px; position: relative; left: -90px; top: -10px;">
+        <table id="sc_show" cellpadding="0" cellspacing="0" style="width: 220px; height: 350px; position: relative; left: 280px; top: 25px; font-family: KaiTi; font-size: 12pt;">
+                <tr><td>请</td><td>输</td><td>入</td><td>．</td><td>．</td><td>．</td><td>．</td></tr>
+                <tr><td>请</td><td>输</td><td>入</td><td>．</td><td>．</td><td>．</td></tr>
+                <tr><td>请</td><td>输</td><td>入</td><td>．</td><td>．</td><td>．</td></tr>
+                <tr><td>请</td><td>输</td><td>入</td><td>．</td><td>．</td><td>．</td></tr>
+                <tr><td>请</td><td>输</td><td>入</td><td>．</td><td>．</td><td>．</td></tr>
+                <tr><td>请</td><td>输</td><td>入</td><td>．</td><td>．</td><td>．</td></tr>
+                <tr><td>请</td><td>输</td><td>入</td><td>．</td><td>．</td><td>．</td></tr>
+                <tr><td>请</td><td>输</td><td>入</td><td>．</td><td>．</td><td>．</td></tr>
+                <tr><td>请</td><td>输</td><td>入</td><td>．</td><td>．</td><td>．</td></tr>
+                <tr><td>请</td><td>输</td><td>入</td><td>．</td><td>．</td><td>．</td></tr>
+                <tr><td>请</td><td>输</td><td>入</td><td>．</td><td>．</td><td>．</td></tr>
+                <tr><td>请</td><td>输</td><td>入</td><td>．</td><td>．</td><td>．</td></tr>
+                <tr><td>请</td><td>输</td><td>入</td><td>．</td><td>．</td><td>．</td></tr>
+                <tr><td>请</td><td>输</td><td>入</td><td>．</td><td>．</td><td>．</td></tr>
+                <tr><td>请</td><td>输</td><td>入</td><td>．</td><td>．</td><td>．</td></tr>
             </table>
         </div>
         <div id="kongbai" style="height: 30px; width: auto; position: relative;">

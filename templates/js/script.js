@@ -35,7 +35,9 @@ function init() {
         $(this).attr('src', "images/" + $(this).attr('id') + "_checked.png");
         var panel_name = $(this).attr('panel-toggle');
         $('.option-panel').hide();
+        $('.show_div').hide();
         $('.option-panel.' + panel_name).show();
+        $('.show_div.' + panel_name).show();
         $('.yan_selector').removeClass('checked');
         $('.action_selector').removeClass('checked');
         $('.action_selector.' + panel_name).addClass('checked');
@@ -48,6 +50,7 @@ function init() {
     $('#button_yes').click(update);
     $('#button_yes2').click(update2);
     $('#button_yes3').click(update3);
+    $('#button_songci').click(update_songci);
     $('.yan_selector').click(yan_clicked);
     $('#button_share').click(share);
 
@@ -60,9 +63,9 @@ function init() {
         }
     });
     $(".new li").click(function() {
-        $(".cipai_selector").attr('src', "images/cipai"+$(this).val());
+        $(".cipai_selector").attr('src', "images/cipai" + $(this).val() + ".png");
+        $(".cipai_selector").attr('value', $(this).val());
         $(".new").slideUp();
-
     });
 
     if (is_pc) {
@@ -74,14 +77,6 @@ function init() {
     // $('#random_button').click(random_question);
     // $('#random_button2').click(random_question2);
     // $('#random_button3').click(random_question3);
-    $("#user_input").bind("keydown", function(e) {
-        var event = e || window.event;
-        var code = event.keyCode || event.which || event.charCode;
-        if (code == '\n'.charCodeAt(0) || code == '\r'.charCodeAt(0)) {
-            e.preventDefault();
-            $('#button_yes').click();
-        }
-    }).focus();
     user_id = randomString(30);
     console.log(user_id);
     if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
@@ -103,12 +98,114 @@ function share() {
         alert("落款长度不超过4个汉字");
     } else {
         $('#myModal').modal('hide')
-        $.post('/share', { share: last_poem, yan : last_yan, type : last_type, tt : last_head, lk: $("#lk-name").val() }, function(data) {
+        $.post('/share', { share: last_poem, yan: last_yan, type: last_type, tt: last_head, lk: $("#lk-name").val() }, function(data) {
             console.log(data);
             document.location.href = "/pic_share/" + data;
             // window.open("http://jiuge.thunlp.org/pic_share/"+data);
         });
     }
+}
+
+function update_songci() {
+    if (!$('#user_input_songci')[0].value)
+        return;
+    var this_head = $('#user_input_songci')[0].value;
+    this_head = this_head.trim().split(" ");
+    var cipai = $('#cipai_select').val();
+
+    var all_chinese = true;
+    if (this_head.length > 4) {
+        show_songci(['关键词多余4个']);
+        return;
+    }
+    for (var i = 0; i < this_head.length; i++)
+        if(this_head[i].length > 2) {
+            show_songci(['词长度超过2']);
+            return;
+        }
+        for (var j = 0; j < this_head[i].length; j++) {
+            if (encodeURI(this_head[i][j]).length != 9)
+                all_chinese = false;
+        }
+    if (!all_chinese) {
+        show_songci(['只能输入汉字']);
+    } else if (in_progress) {
+        check_songci(cipai, this_head);
+    } else {
+        send_songci(cipai, this_head);
+    }
+}
+
+function send_songci(this_yan, this_head) {
+    var show = $('#sc_show');
+    show.empty();
+    var div = $('<div><img/></div>');
+    div.find('img').attr('src', 'images/waiting.gif');
+    show.append(div);
+    show.append($('<div>正在为您创作...</div>'));
+    var apiurl = 'sendPoem';
+    $(".xzw_starSys").hide();
+    $("#div_share").hide();
+    $("#kongbai").css("height", "30px");
+    $.ajax({
+        url: apiurl,
+        method: 'POST',
+        data: {type: "SC", yan: this_yan, keyword: this_head, user_id: user_id},
+        success: function(data) {
+            if (data == "mgc") {
+                show_songci(['该主题词无法成词', '请重新选择主题词']);
+                return;
+            }
+            in_progress = true;
+            var show = $('#sc_show');
+            if (Number(data) < 0) {
+                data = '0';
+            }
+            show.append($('<div>还有' + data + '首排队...</div>'));
+            timeid = window.setInterval(function() {
+                check_songci(this_yan, this_head);
+            }, 500);
+        },
+        error: function(e) {
+            show_songci(['服务器错误', '请稍候再试']);
+            // star_show();
+        },
+    });
+}
+
+
+function check_songci(this_yan, this_head) {
+    apiurl = "getPoem"
+    $.ajax({
+        url: apiurl,
+        method: 'POST',
+        data: { type: "SC", yan: this_yan, keyword: this_head, user_id: user_id },
+        success: function(data) {
+            last_poem = data;
+            var ans = eval('(' + data + ')');
+            var show = $('#sc_show');
+            show.empty();
+            if (ans.code == '0') {
+                var div = $('<div><img/></div>');
+                div.find('img').attr('src', 'images/waiting.gif');
+                show.append(div);
+                show.append($('<div>正在为您创作...</div>'));
+                if (ans['content'] != '0') {
+                    show.append($('<div>还有' + ans['content'] + '首排队...</div>'));
+                }
+            } else {
+                var tmp_sc = ans.content;
+                // console.log(ans);
+                show_songci(tmp_sc);
+                window.clearInterval(timeid);
+                in_progress = false;
+            }
+        },
+        error: function(e) {
+            window.clearInterval(timeid);
+            show_songci(['服务器错误', '请稍候再试']);
+        },
+    });
 }
 
 function update() {
@@ -364,6 +461,26 @@ function show_strings(v) {
     var show = $('#poem_show');
     show.css("width", "260px");
     show.css("left", "245px");
+    show.empty();
+    var max_length = 0;
+    for (var i = 0; i < v.length; i++) {
+        if (v[i].length > max_length)
+            max_length = length;
+    }
+    for (var i = 0; i < v.length; i++) {
+        var tr = $('<tr></tr>');
+        var s = v[i];
+        for (var j = 0; j < s.length; j++) {
+            var td = $('<td></td>');
+            td.text(s[j]);
+            tr.append(td);
+        }
+        show.append(tr);
+    }
+}
+
+function show_songci(v) {
+    var show = $('#sc_show');
     show.empty();
     var max_length = 0;
     for (var i = 0; i < v.length; i++) {
