@@ -507,7 +507,6 @@ function show_songci(v) {
         }
         show.append(tr);
     }
-    if()
     show.attr("height", "350px");
     show.attr("top", "25px");
 }
