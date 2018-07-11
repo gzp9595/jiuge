@@ -132,7 +132,7 @@ def sendProm():
         if(queue_start == None):
             queue_start = [0]
         new_flag = True
-
+        print(u)
         if(u != None):
             result = celery.result.AsyncResult(u[1])
             status = result.status
@@ -143,6 +143,7 @@ def sendProm():
             ans = str(int(u[2])-int(queue_start[0]))
         else:
             # print u
+            print(123)
             type_top = {'type':s['type'], "yan":s['yan'], "top":s['keyword']}
             # type_top = {'type':'JJ', "yan":'7', "top":'清华'}
             poem = {'user_id':s['user_id'], 'type_top':type_top}
