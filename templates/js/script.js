@@ -515,6 +515,9 @@ function show_songci(v) {
         ll1 = 25;
         size = "16pt";
     }
+    if(v.length == 15) {
+        size = '12pt';
+    }
     show.css("height", String(ll)+"px");
     show.css("top", String(ll1)+"px");
     show.css("font-size", size);
