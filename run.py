@@ -246,9 +246,8 @@ def getProm():
                 prom = json.loads(result.result)
                 tmp = prom['result']
                 print(prom)
-                if(s['type'] != "SC"):
-                    ans['content'] = tmp['content'].split("\t")
-                elif(s['type'] == "SC"):
+
+                if(s['type'] == "SC"):
                     if(len(tmp['content']) == 1):
                         ans['content'] = tmp['content'][0]
                     else:
@@ -259,6 +258,8 @@ def getProm():
                         ans['content'] = tmp['content'][0]
                     else:
                         ans['content'] = tmp['content'].split("\t")
+                else:
+                    ans['content'] = tmp['content'].split("\t")
 
                 if(tmp['code'] == 1):
                     ans['source'] = tmp['source']
