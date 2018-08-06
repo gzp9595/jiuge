@@ -32,7 +32,7 @@ conf.read(os.path.join(server_dir, "config.cfg"))
 _error_log = generate_logger("error_html")
 mgc = map(lambda x:x.strip().decode("utf-8"), open("/var/www/jiuge/mgc.txt").readlines())
 # _nor_log = generate_output_logger("")
-
+keywrapper = KeyWrapper()
 
 def handle_static(res, name):
     return send_from_directory(_tpl_dir+res, name)
@@ -176,7 +176,7 @@ def sendProm():
             elif(s['type'] == "SC"):
                 cele = main_SC.delay(json.dumps(poem))
             elif(s['type'] == "JueJu"):
-                words = type_top['top'].strip().split(" ")
+                words = type_top['top']
                 model, newwords = keywrapper.process(words)
                 newwords = " ".join(newwords)
                 type_top['top'] = newwords
