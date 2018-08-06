@@ -3,20 +3,20 @@
 
 ###接口整体说明
 
-1. 第一次发送藏头诗关键词  http://118.190.162.99/sendPoem Post方式
-2. 检查古诗生成情况  http://118.190.162.99/getPoem Post方式
+1. 第一次发送藏头诗关键词  https://jiuge.thunlp.cn/sendPoem Post方式
+2. 检查古诗生成情况  https://jiuge.thunlp.cn/getPoem Post方式
 
 ###sendPoem
 
-url: http://118.190.162.99/sendPoem post方式
+url: https://jiuge.thunlp.cn/sendPoem post方式
 
 输入参数(json格式)：
 
 ```
 {
-    "type":"CT"
+    "type":"JueJu"
     "yan":"5"或者"7"
-    "keyword":藏头诗的关键词
+    "keyword":关键词list，不能超过4个。
     "user_id":每个人不同的id
 }
 ```
@@ -30,15 +30,15 @@ url: http://118.190.162.99/sendPoem post方式
 
 ###getPoem
 
-url: http://118.190.162.99/getPoem post方式
+url: https://jiuge.thunlp.cn/sendPoem post方式
 
 输入参数(json格式)：
 
 ```
 {
-    "type":"CT"
+    "type":"JueJu"
     "yan":"5"或者"7"
-    "keyword":藏头诗的关键词
+    "keyword":关键词list，不能超过4个。
     "user_id":每个人不同的id
 }
 ```

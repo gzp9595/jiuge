@@ -180,9 +180,13 @@ def sendProm():
                 model, newwords = keywrapper.process(words)
                 newwords = " ".join(newwords)
                 type_top['top'] = newwords
+                yan_map = {"5":"0","7":"1"}
                 if(model == 'wm'):
+                    type_top['yan'] = yan_map[type_top['yan']]
+                    poem = {'user_id':s['user_id'], 'type_top':type_top}
                     cele = main_SC.delay(json.dumps(poem))
                 else:
+                    poem = {'user_id':s['user_id'], 'type_top':type_top}
                     cele = main_JJ.delay(json.dumps(poem))
             print(cele.task_id)
 
