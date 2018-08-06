@@ -17,6 +17,8 @@ from tasks import *
 import celery
 from PIL import Image, ImageFont, ImageDraw
 
+from KeyWrapper.KeyWrapper import KeyWrapper
+
 
 app = Flask(__name__)
 CORS(app)
@@ -143,7 +145,6 @@ def sendProm():
             ans = str(int(u[2])-int(queue_start[0]))
         else:
             # print u
-            print(123)
             type_top = {'type':s['type'], "yan":s['yan'], "top":s['keyword']}
             # type_top = {'type':'JJ', "yan":'7', "top":'清华'}
             poem = {'user_id':s['user_id'], 'type_top':type_top}
@@ -173,10 +174,16 @@ def sendProm():
             elif(s['type'] == "JJJ"):
                 cele = main_JJJ.delay(json.dumps(poem))
             elif(s['type'] == "SC"):
-                print(123)
                 cele = main_SC.delay(json.dumps(poem))
             elif(s['type'] == "JueJu"):
-                cele = main_Tencent.delay(json.dumps(poem))
+                words = type_top['top'].strip().split(" ")
+                model, newwords = keywrapper.process(words)
+                newwords = " ".join(newwords)
+                type_top['top'] = newwords
+                if(model == 'wm'):
+                    cele = main_SC.delay(json.dumps(poem))
+                else:
+                    cele = main_JJ.delay(json.dumps(poem))
             print(cele.task_id)
 
             cursor.execute('insert into list_'+s['type']+'(id, user_id, status) values(null, %s, %s)', (s['user_id'], "PENDING"))
@@ -237,11 +244,16 @@ def getProm():
                 print(ans['content'])
                 if(s['type'] != "SC"):
                     ans['content'] = tmp['content'].split("\t")
-                else:
+                elif(s['type'] == "SC"):
                     if(len(tmp['content']) == 1):
                         ans['content'] = tmp['content'][0]
                     else:
                         ans['content'] = tmp['content'][0] + ['-'] + tmp['content'][1]
+                elif(s['type'] == "JueJu"):
+                    if(len(tmp['content']) == 1):
+                        ans['content'] = tmp['content'][0]
+                    else:
+                        ans['content'] = tmp['content'].split("\t")
 
                 if(tmp['code'] == 1):
                     ans['source'] = tmp['source']

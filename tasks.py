@@ -238,7 +238,7 @@ def main_Tencent(prom_old):
     global myUI
     if(songci == None):
         sys.path.append("/var/jiuge/SC/")
-        os.chdir("/root/jiuge/SC/")
+        os.chdir("/var/jiuge/SC/")
         from Core.PoetryUI import PoetryUI
         songci = PoetryUI()
     if(myUI == None):
