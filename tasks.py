@@ -217,13 +217,67 @@ def main_SC(prom_old):
     # state = JJ_code[int(random.random()*5)]
     # print "state:", state
     try:
-        ans, info = songci.generate(type_top['top'].encode("utf-8"), int(type_top['yan'])+1)
-        print ans
+        poems, info = songci.generate(type_top['top'].encode("utf-8"), int(type_top['yan'])+1)
+        print poems
     except Exception as e:
         print e
         poems = []
         info = "Error"
-    if(len(ans) == 0):
+    if(len(poems) == 0):
+        print info
+        poems = [['该主题词无法成词', '请重新选择主题词']]
+    prom_result = {"code": 0, "content": poems}
+    prom['result'] = prom_result
+    return json.dumps(prom)
+
+
+from KeyWrapper.KeyWrapper import KeyWrapper
+@app.task(base=CallbackTask)
+def main_Tencent(prom_old):
+    global songci
+    global myUI
+    if(songci == None):
+        sys.path.append("/var/jiuge/SC/")
+        os.chdir("/root/jiuge/SC/")
+        from Core.PoetryUI import PoetryUI
+        songci = PoetryUI()
+    if(myUI == None):
+        os.chdir("/var/jiuge/JueJu/")
+        sys.path.append("/var/jiuge/JueJu/")
+        from KSModel.SampleUI import SampleUI
+        myUI = SampleUI()
+    prom = json.loads(prom_old)
+    print(prom)
+    # if(not prom['used'] == None):
+    #     prom['result'] = json.loads(prom['used'])
+    #     prom['used'] = 'True'
+    #     return json.dumps(prom)
+    words = type_top['top'].strip().split(" ")
+    model, newwords = keywrapper.process(words)
+    newwords = " ".join(newwords)
+    type_top = prom['type_top']
+    tmp = type_top['top']+type_top['yan']
+    # prom_result = 'test\ttest'
+    # state = JJ_code[int(random.random()*5)]
+    # print "state:", state
+    yan_map = {"5":0,"7":1}
+    if(model == 'wm'):
+        try:
+            poems, info = songci.generate(newwords.encode("utf-8"), yan_map[type_top['yan']])
+            print poems
+        except Exception as e:
+            print e
+            poems = []
+            info = "Error"
+    else:
+        try:
+            poems, info = myUI.generate(newwords.encode("utf-8"), int(type_top['yan']), 1)
+            print poems
+        except Exception as e:
+            print e
+            poems = []
+            info = "Error"
+    if(len(poems) == 0):
         print info
         poems = [['该主题词无法成词', '请重新选择主题词']]
     prom_result = {"code": 0, "content": ans}

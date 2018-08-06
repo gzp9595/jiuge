@@ -175,6 +175,8 @@ def sendProm():
             elif(s['type'] == "SC"):
                 print(123)
                 cele = main_SC.delay(json.dumps(poem))
+            elif(s['type'] == "JueJu"):
+                cele = main_Tencent.delay(json.dumps(poem))
             print(cele.task_id)
 
             cursor.execute('insert into list_'+s['type']+'(id, user_id, status) values(null, %s, %s)', (s['user_id'], "PENDING"))
