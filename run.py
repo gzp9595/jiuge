@@ -180,7 +180,7 @@ def sendProm():
                 model, newwords = keywrapper.process(words)
                 newwords = " ".join(newwords)
                 type_top['top'] = newwords
-                yan_map = {"5":"0","7":"1"}
+                yan_map = {"5":"-1","7":"0"}
                 if(model == 'wm'):
                     type_top['yan'] = yan_map[type_top['yan']]
                     poem = {'user_id':s['user_id'], 'type_top':type_top}
@@ -255,7 +255,7 @@ def getProm():
                         ans['content'] = tmp['content'][0] + ['-'] + tmp['content'][1]
                 elif(s['type'] == "JueJu"):
 
-                    if(len(tmp['content']) == 1):
+                    if(len(tmp['content']) == 4):
                         ans['content'] = tmp['content'][0]
                     else:
                         ans['content'] = tmp['content'].split("\t")
