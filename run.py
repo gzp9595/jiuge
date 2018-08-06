@@ -255,7 +255,7 @@ def getProm():
                         ans['content'] = tmp['content'][0] + ['-'] + tmp['content'][1]
                 elif(s['type'] == "JueJu"):
 
-                    if(len(tmp['content']) == 4):
+                    if(len(tmp['content']) == 1):
                         ans['content'] = tmp['content'][0]
                     else:
                         ans['content'] = tmp['content'].split("\t")
