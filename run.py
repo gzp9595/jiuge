@@ -245,7 +245,7 @@ def getProm():
             if(status == 'SUCCESS'):
                 prom = json.loads(result.result)
                 tmp = prom['result']
-                print(ans['content'])
+                print(prom)
                 if(s['type'] != "SC"):
                     ans['content'] = tmp['content'].split("\t")
                 elif(s['type'] == "SC"):
@@ -254,6 +254,7 @@ def getProm():
                     else:
                         ans['content'] = tmp['content'][0] + ['-'] + tmp['content'][1]
                 elif(s['type'] == "JueJu"):
+
                     if(len(tmp['content']) == 1):
                         ans['content'] = tmp['content'][0]
                     else:
