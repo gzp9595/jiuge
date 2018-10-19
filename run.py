@@ -339,11 +339,11 @@ def share():
     # if(len(lk) == 0):
     #     lk = u'九歌作'
     # print(s)
-    ideal = []
-    for i in s:
-        ideal.append([])
-        for j in i:
-            ideal[-1].append(j)
+    ideal = s
+    # for i in s:
+        # ideal.append([])
+        # for j in i:
+            # ideal[-1].append(j)
     print(ideal)
     # ans = get_ans(ideal)
     ans = add_ideal_new(int(random.random()*5)+1, jtype, ideal, server_dir)
