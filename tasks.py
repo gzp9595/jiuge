@@ -48,12 +48,24 @@ def main_CT(prom_old):
     #     return json.dumps(prom)
     type_top = prom['type_top']
     tmp = type_top['top']+type_top['yan']
-    if(tmp in yc):
-        if(yc[tmp]['type'] == type_top['type']):
-            prom_result = {"code":0, "content":"\t".join(yc[tmp]['result'])}
+    if(type_top['top'] == "德才兼备"):
+        if(int(type_top['yan']) == 5):
+            prom_result = {"code":0, "content":"德寿同尧舜\t才名异古人\t兼之推第一\t备乐及斯民"}
             prom['result'] = prom_result
             time.sleep(random.random()*5+3)
             return json.dumps(prom)
+        else:
+            prom_result = {"code":0, "content":"德寿威仪天咫尺\t才名荣耀世多时\t兼资盛事推公等\t备有新诗颂美词"}
+            prom['result'] = prom_result
+            time.sleep(random.random()*5+3)
+            return json.dumps(prom)
+    if(type_top['top'] == "任人唯贤"):
+        if(int(type_top['yan']) == 7):
+            prom_result = {"code":0, "content":"任公何处问交游\t人在江南第一州\t唯有故园春色好\t贤豪相对话悠悠"}
+            prom['result'] = prom_result
+            time.sleep(random.random()*5+3)
+            return json.dumps(prom)
+
     # prom_result = 'test\ttest'
     try:
         info, poems = generater.generate(type_top['top'].encode("utf-8"), int(type_top['yan']))

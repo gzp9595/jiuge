@@ -85,25 +85,26 @@ function init() {
 }
 
 function share() {
-    lk = $("#lk-name").val();
-    var all_chinese = true;
-    for (var i = 0; i < lk.length; i++) {
-        if (encodeURI(lk[i]).length != 9)
-            all_chinese = false;
-    }
-    if (lk.length > 4) {
-        all_chinese = false;
-    }
-    if (!all_chinese) {
-        alert("落款长度不超过4个汉字");
-    } else {
-        $('#myModal').modal('hide')
-        $.post('/share', { share: last_poem, yan: last_yan, type: last_type, tt: last_head, lk: $("#lk-name").val() }, function(data) {
+    // lk = $("#lk-name").val();
+    // var all_chinese = true;
+    // for (var i = 0; i < lk.length; i++) {
+    //     if (encodeURI(lk[i]).length != 9)
+    //         all_chinese = false;
+    // }
+    // if (lk.length > 4) {
+    //     all_chinese = false;
+    // }
+    // if (!all_chinese) {
+    //     alert("落款长度不超过4个汉字");
+    // } else {
+        // $('#myModal').modal('hide')
+        // $.post('/share', { share: last_poem, yan: last_yan, type: last_type, tt: last_head, lk: $("#lk-name").val() }, function(data) {
+        $.post('/share', { share: last_poem, yan: last_yan, type: last_type }, function(data) {
             console.log(data);
             document.location.href = "/pic_share/" + data;
             // window.open("http://jiuge.thunlp.org/pic_share/"+data);
         });
-    }
+    // }
 }
 
 function update_songci() {
@@ -135,6 +136,7 @@ function update_songci() {
         check_songci(cipai, this_head_tmp.trim());
     } else {
         send_songci(cipai, this_head_tmp.trim());
+        last_type = "SC"
     }
 }
 

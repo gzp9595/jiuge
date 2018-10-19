@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from flask import *
@@ -12,12 +13,13 @@ import datetime
 from flask_cors import CORS
 from untils import generate_logger
 from setting import HOST_PROXY, PORT_PROXY
+from pic import add_ideal as add_ideal_new
 
 from tasks import *
 import celery
 from PIL import Image, ImageFont, ImageDraw
 
-from KeyWrapper.KeyWrapper import KeyWrapper
+from KeyWrapper.Core.KeyWrapper import KeyWrapper
 
 
 app = Flask(__name__)
@@ -177,7 +179,7 @@ def sendProm():
                 cele = main_SC.delay(json.dumps(poem))
             elif(s['type'] == "JueJu"):
                 words = type_top['top']
-                model, newwords = keywrapper.process(words)
+                model, newwords = keywrapper.process(words.split(" "))
                 newwords = " ".join(newwords)
                 type_top['top'] = newwords
                 yan_map = {"5":"-1","7":"0"}
@@ -323,12 +325,19 @@ def sendstar():
 @app.route('/share', methods=['POST'])
 def share():
     s = json.loads(request.form['share'])['content']
-    lk = request.form['lk']
+    # lk = request.form['lk']
     yan = request.form['yan']
     jtype = request.form['type']
-    tt = request.form['tt']
-    if(len(lk) == 0):
-        lk = u'九歌作'
+    if(jtype == "SC"):
+        yan = int(yan) + 1
+    else:
+        if(int(yan) == 7):
+            yan = 1
+        else:
+            yan = 0
+    # tt = request.form['tt']
+    # if(len(lk) == 0):
+    #     lk = u'九歌作'
     # print(s)
     ideal = []
     for i in s:
@@ -337,7 +346,7 @@ def share():
             ideal[-1].append(j)
     print(ideal)
     # ans = get_ans(ideal)
-    ans = add_ideal(int(random.random()*55)+1, yan, jtype, tt, ideal, lk)
+    ans = add_ideal_new(int(random.random()*5)+1, jtype, ideal, server_dir)
     # clean()
     # print 'ans=', ans
     return ans

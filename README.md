@@ -30,7 +30,7 @@ url: https://jiuge.thunlp.cn/sendPoem post方式
 
 ###getPoem
 
-url: https://jiuge.thunlp.cn/sendPoem post方式
+url: https://jiuge.thunlp.cn/getPoem post方式
 
 输入参数(json格式)：
 
