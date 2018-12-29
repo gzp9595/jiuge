@@ -101,7 +101,7 @@ function share() {
         // $.post('/share', { share: last_poem, yan: last_yan, type: last_type, tt: last_head, lk: $("#lk-name").val() }, function(data) {
         $.post('/share', { share: last_poem, yan: last_yan, type: last_type }, function(data) {
             console.log(data);
-            document.location.href = "/pic_share/" + data;
+            document.location.href = "/pic_share_html/" + data;
             // window.open("http://jiuge.thunlp.org/pic_share/"+data);
         });
     // }
@@ -136,7 +136,8 @@ function update_songci() {
         check_songci(cipai, this_head_tmp.trim());
     } else {
         send_songci(cipai, this_head_tmp.trim());
-        last_type = "SC"
+        last_type = "SC";
+        last_yan = cipai;
     }
 }
 
@@ -203,6 +204,7 @@ function check_songci(this_yan, this_head) {
             } else {
                 var tmp_sc = ans.content;
                 show_songci(tmp_sc);
+                star_show();
                 window.clearInterval(timeid);
                 in_progress = false;
             }
@@ -566,7 +568,7 @@ function star_show() {
     $("#kongbai").css("height", "10px");
     $(".showb").css("width", 0);
     $(".description").text(" ");
-    $("#star_title").text("请对本首诗打分");
+    $("#star_title").text("请对本首诗词打分");
     star_has = false;
     descriptionTemp = " ";
     $(".xzw_starSys").show();

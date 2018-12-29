@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from flask import *
@@ -13,14 +12,13 @@ import datetime
 from flask_cors import CORS
 from untils import generate_logger
 from setting import HOST_PROXY, PORT_PROXY
-from pic import add_ideal as add_ideal_new
 
 from tasks import *
 import celery
 from PIL import Image, ImageFont, ImageDraw
 
 from KeyWrapper.Core.KeyWrapper import KeyWrapper
-
+from pic import add_ideal as add_ideal_new
 
 app = Flask(__name__)
 CORS(app)
@@ -163,7 +161,7 @@ def sendProm():
             #         poem['used'] = None
             cele = None
             if(s['type'] == "JJ"):
-                if(random.random() > 0.4):
+                if(random.random() > 0.0):
                     print("JJ yxy")
                     cele = main_JJ.delay(json.dumps(poem))
                 else:
@@ -179,17 +177,18 @@ def sendProm():
                 cele = main_SC.delay(json.dumps(poem))
             elif(s['type'] == "JueJu"):
                 words = type_top['top']
-                model, newwords = keywrapper.process(words.split(" "))
+                model, newwords = keywrapper.process(words.strip().split(" "))
                 newwords = " ".join(newwords)
                 type_top['top'] = newwords
                 yan_map = {"5":"-1","7":"0"}
+                print(model, "JueJu")
                 if(model == 'wm'):
                     type_top['yan'] = yan_map[type_top['yan']]
                     poem = {'user_id':s['user_id'], 'type_top':type_top}
-                    cele = main_SC.delay(json.dumps(poem))
+                    cele = main_SC.apply_async(args=[json.dumps(poem)], queue='JJ2_tencent')
                 else:
                     poem = {'user_id':s['user_id'], 'type_top':type_top}
-                    cele = main_JJ.delay(json.dumps(poem))
+                    cele = main_JJ.apply_async(args=[json.dumps(poem)], queue="JJ_tencent")
             print(cele.task_id)
 
             cursor.execute('insert into list_'+s['type']+'(id, user_id, status) values(null, %s, %s)', (s['user_id'], "PENDING"))
@@ -255,7 +254,6 @@ def getProm():
                     else:
                         ans['content'] = tmp['content'][0] + ['-'] + tmp['content'][1]
                 elif(s['type'] == "JueJu"):
-
                     if(len(tmp['content']) == 1):
                         ans['content'] = tmp['content'][0]
                     else:
@@ -346,18 +344,45 @@ def share():
             # ideal[-1].append(j)
     print(ideal)
     # ans = get_ans(ideal)
-    ans = add_ideal_new(int(random.random()*5)+1, jtype, ideal, server_dir)
+    ans = add_ideal_new(int(random.random()*5)+1, yan, ideal, server_dir)
     # clean()
     # print 'ans=', ans
     return ans
     # return render_template("share.html", ans = ans)
     # return render(request, "IdealColor/templates/1.html")
 
-@app.route('/pic_share/<path:name>')
+@app.route('/share1', methods=['POST'])
+def share1():
+    s = json.loads(request.form['share'])['content']
+    lk = request.form['lk']
+    yan = request.form['yan']
+    jtype = request.form['type']
+    tt = request.form['tt']
+    if(len(lk) == 0):
+        lk = u'九歌作'
+    # print(s)
+    ideal = []
+    for i in s:
+        ideal.append([])
+        for j in i:
+            ideal[-1].append(j)
+    print(ideal)
+    # ans = get_ans(ideal)
+    ans = add_ideal(int(random.random()*55)+1, yan, jtype, tt, ideal, lk)
+    # clean()
+    # print 'ans=', ans
+    return ans
+    # return render_template("share.html", ans = ans)
+    # return render(request, "IdealColor/templates/1.html")
+
+#@app.route('/pic_share/<path:name>')
+#def pic_share(name):
+#    print(name)
+   # return render_template("share.html", title = "九歌分享", ans = '/share/new/' + name)
+@app.route('/pic_share_html/<path:name>')
 def pic_share(name):
     print(name)
-    return render_template("share.html", title = "九歌分享", ans = '/share/new/' + name + '.jpg')
-
+    return render_template("share.html", title = u"九歌分享", ans = '/share/new/' + name, ans1 = "/share/new/"+ name.replace(".jpg", "ew.jpg"))
 
 def clean():
     flist = os.listdir('IdealColor/static/images')

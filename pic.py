@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from PIL import Image, ImageFont, ImageDraw
 import time
+import qrcode
 
 # server_dir = "/home/ljn/Projects/jiuge-photo"
 
@@ -112,6 +113,10 @@ def add_ideal(ans, title, content, server_dir):
     draw = ImageDraw.Draw(im)
     # index = tilte_map[title]
     print(content)
+    for i in range(len(content)):
+        if(content[i] == u"-"):
+            del content[i]
+            break
     content = "".join(content)
     index = title
     title = title_id[index]
@@ -148,6 +153,8 @@ def add_ideal(ans, title, content, server_dir):
     time_str = str(time.time())
     filename = '/share/new/' + time_str + '.jpg'
     im.save(server_dir+filename)
+    img = qrcode.make("https://jiuge.thunlp.cn/pic_share/"+time_str+".jpg")
+    img.save(server_dir + filename.replace(".jpg", "ew.jpg"))
     return time_str + '.jpg'
 
 test_content = [
