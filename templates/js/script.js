@@ -359,11 +359,7 @@ function send_poem(this_type, this_yan, this_head) {
                 return;
             }
             if (ans['code'] == "tsinghua") {
-                var show = $('#poem_show');
-                show.empty();
-                var div = $('<div><img/></div>');
-                div.find('img').attr('src', 'images/tsinghua.jpg');
-                show.append(div);
+                $("#tsinghua_pic").show();
                 tsinghua_id = ans['ans'];
                 $("#div_share_tsinghua").show();
                 return;
