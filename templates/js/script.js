@@ -116,6 +116,7 @@ function share_tsinghua() {
 
 function countinue_poem() {
     $("#div_share_tsinghua").hide();
+    $("#tsinghua_pic").hide();
     timeid = window.setInterval(function() {
         check_poem(last_type, last_yan, last_head);
     }, 500);
@@ -180,12 +181,7 @@ function send_songci(this_yan, this_head) {
                 return;
             }
             if (ans['code'] == "tsinghua") {
-                tsinghua_id = ans['ans'];
-                var show = $('#poem_show');
-                show.empty();
-                var div = $('<div><img/></div>');
-                div.find('img').attr('src', 'images/tsinghua.jpg');
-                show.append(div);
+                $("#tsinghua_pic").show();
                 tsinghua_id = ans['ans'];
                 $("#div_share_tsinghua").show();
                 return;
