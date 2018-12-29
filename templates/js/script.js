@@ -167,6 +167,7 @@ function send_songci(this_yan, this_head) {
     $(".xzw_starSys").hide();
     $("#div_share").hide();
     $("#div_share_tsinghua").hide();
+    $("#tsinghua_pic").hide();
     $("#kongbai").css("height", "30px");
     show.css("height", "350px");
     show.css("top", "25px");
@@ -349,6 +350,7 @@ function send_poem(this_type, this_yan, this_head) {
     $(".xzw_starSys").hide();
     $("#div_share").hide();
     $("#div_share_tsinghua").hide();
+    $("#tsinghua_pic").hide();
     $("#kongbai").css("height", "30px");
     $.ajax({
         url: apiurl,
