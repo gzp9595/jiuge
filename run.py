@@ -99,21 +99,32 @@ def sendProm():
     print(request.form)
     for i in mgc:
         if(i in s['keyword']):
-            return "mgc"
+            return json.dumps({'code':"mgc"})
     if(s['type'] == u'CT'):
         if(len(s['keyword']) > 4):
-            return "mgc"
+            return json.dumps({'code':"mgc"})
         for i in s['keyword']:
             if('0' <= i <= '9' or 'a' <= i <= 'z'):
-                return "mgc"
+                return json.dumps({'code':"mgc"})
     if(s['type'] == u'SC'):
         if(len(s['keyword'].split(" ")) > 4):
-            return "mgc"
+            return json.dumps({'code':"mgc"})
     #print(s['keyword'].encode("utf-8"))
     #for i in s['keyword'].decode("utf-8"):
         #if(not (u'\\u4e00' <= i <= u'\\u9fa5')):
             #print(i)
             #return "mgc"
+    tsinghua_word = ['自强不息','厚德载物','行胜于言','我爱清华','清华等我','圆梦清华','清小华','清华招生','无体育不清华','清华正芳华']
+    ans_tsinghua = None
+    if(s['keyword'] in tsinghua_word):
+        time.sleep(random.random()*2)
+        num = random.randint(1, 10)
+        im = Image.open(server_dir+'/share/tsinghua/' + str(num) + '.jpg')
+        time_str = str(time.time())
+        filename = '/share/new/' + time_str + '.jpg'
+        im.save(server_dir+filename)
+        ans_tsinghua = {'code':"tsinghua", "ans":time_str + '.jpg'}
+
     ans = ""
     print("begin")
     # print s
@@ -215,7 +226,7 @@ def sendProm():
     finally:
         cursor.close()
         conn.close()
-    return ans
+    return json.dumps({"code" :"0000", "ans":ans})
 
 
 @app.route('/getPoem', methods=['POST'])
