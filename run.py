@@ -115,6 +115,7 @@ def sendProm():
             #print(i)
             #return "mgc"
     tsinghua_word = [u'自强不息',u'厚德载物',u'行胜于言',u'我爱清华',u'清华等我',u'圆梦清华',u'清小华',u'清华招生',u'无体育不清华',u'清华正芳华']
+
     ans_tsinghua = None
     if(s['keyword'] in tsinghua_word):
         time.sleep(random.random()*2)
@@ -226,7 +227,10 @@ def sendProm():
     finally:
         cursor.close()
         conn.close()
-    return json.dumps({"code" :"0000", "ans":ans})
+    if(ans_tsinghua is None):
+        return json.dumps({"code" :"0000", "ans":ans})
+    else:
+        return json.dumps(ans_tsinghua)
 
 
 @app.route('/getPoem', methods=['POST'])
