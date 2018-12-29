@@ -118,7 +118,7 @@ def sendProm():
 
     ans_tsinghua = None
     if(s['keyword'] in tsinghua_word):
-        time.sleep(random.random()*2)
+        time.sleep(random.random()*2 + 1)
         num = random.randint(1, 10)
         im = Image.open(server_dir+'/share/tsinghua/' + str(num) + '.jpg')
         time_str = str(time.time())
