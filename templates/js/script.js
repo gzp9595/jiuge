@@ -182,6 +182,8 @@ function send_songci(this_yan, this_head) {
             }
             if (ans['code'] == "tsinghua") {
                 $("#tsinghua_pic").show();
+                var show = $('#poem_show');
+                show.empty();
                 tsinghua_id = ans['ans'];
                 $("#div_share_tsinghua").show();
                 return;
@@ -360,6 +362,8 @@ function send_poem(this_type, this_yan, this_head) {
             }
             if (ans['code'] == "tsinghua") {
                 $("#tsinghua_pic").show();
+                var show = $('#poem_show');
+                show.empty();
                 tsinghua_id = ans['ans'];
                 $("#div_share_tsinghua").show();
                 return;
