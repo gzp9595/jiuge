@@ -151,7 +151,7 @@ def sendProm():
             result = celery.result.AsyncResult(u[1])
             status = result.status
             print(u[0], status)
-            if(status == 'SUCCESS'):
+            if(status == 'SUCCESS' or status == 'FAILURE'):
                 new_flag = False
         if(u != None and new_flag):
             ans = str(int(u[2])-int(queue_start[0]))
@@ -398,6 +398,11 @@ def share1():
 def pic_share(name):
     print(name)
     return render_template("share.html", title = u"九歌分享", ans = '/share/new/' + name, ans1 = "/share/new/"+ name.replace(".jpg", "ew.jpg"))
+
+@app.route('/pic_share_tsinghua/<path:name>')
+def pic_share_tsinghua(name):
+    print(name)
+    return render_template("share1.html", title = u"清华彩蛋", ans = '/share/new/' + name)
 
 def clean():
     flist = os.listdir('IdealColor/static/images')

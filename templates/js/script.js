@@ -104,14 +104,14 @@ function share() {
     // $.post('/share', { share: last_poem, yan: last_yan, type: last_type, tt: last_head, lk: $("#lk-name").val() }, function(data) {
     $.post('/share', { share: last_poem, yan: last_yan, type: last_type }, function(data) {
         console.log(data);
-        document.location.href = "/pic_share_html/" + data;
-        // window.open("http://jiuge.thunlp.org/pic_share/"+data);
+        window.open("/pic_share_html/" + data);
+        // document.location.href = "/pic_share_html/" + data;
     });
     // }
 }
 
 function share_tsinghua() {
-    window.open("/pic_share_html/" + tsinghua_id);
+    window.open("/pic_share_tsinghua/" + tsinghua_id);
 }
 
 function countinue_poem() {
