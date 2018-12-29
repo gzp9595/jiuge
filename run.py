@@ -114,7 +114,7 @@ def sendProm():
         #if(not (u'\\u4e00' <= i <= u'\\u9fa5')):
             #print(i)
             #return "mgc"
-    tsinghua_word = ['自强不息','厚德载物','行胜于言','我爱清华','清华等我','圆梦清华','清小华','清华招生','无体育不清华','清华正芳华']
+    tsinghua_word = [u'自强不息',u'厚德载物',u'行胜于言',u'我爱清华',u'清华等我',u'圆梦清华',u'清小华',u'清华招生',u'无体育不清华',u'清华正芳华']
     ans_tsinghua = None
     if(s['keyword'] in tsinghua_word):
         time.sleep(random.random()*2)
