@@ -111,7 +111,7 @@ function share() {
 }
 
 function share_tsinghua() {
-    window.open("https://jiuge.thunlp.cn/pic_share_html/" + tsinghua_id);
+    window.open("/pic_share_html/" + tsinghua_id);
 }
 
 function countinue_poem() {
