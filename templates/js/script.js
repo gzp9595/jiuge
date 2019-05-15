@@ -178,6 +178,7 @@ function send_songci(this_yan, this_head) {
         method: 'POST',
         data: { type: "SC", yan: this_yan, keyword: this_head, user_id: user_id },
         success: function(data) {
+            var ans = eval('(' + data + ')');
             if (ans['code'] == "mgc") {
                 show_strings(['该主题词无法成诗', '请重新选择主题词']);
                 return;
