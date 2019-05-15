@@ -344,7 +344,9 @@ def share():
         return share2(form)
     if(len(form['lk']) == 0 and random.random() < 0.3):
         return share2(form)
-    return share(form)
+    return share1(form)
+
+
 def share2(form):
     s = json.loads(form['share'])['content']
     # lk = request.form['lk']
