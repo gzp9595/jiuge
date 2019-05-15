@@ -426,7 +426,7 @@ def clean():
 
 
 def add_ideal(ans, yan, jtype, tt, ideal, lk = u'九歌作'):
-    im = Image.open(server_dir+'/share/old/' + str(ans) + '.jpg')
+    im = Image.open(server_dir+'/share/old_old/' + str(ans) + '.jpg')
     draw = ImageDraw.Draw(im)
     # newfont = ImageFont.truetype('IdealColor/static/fonts/PingFang Heavy.ttf', 150)
     newfont = ImageFont.truetype(server_dir+'/share/font/STXINGKA.ttf', 110)
