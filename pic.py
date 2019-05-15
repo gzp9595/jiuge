@@ -118,7 +118,9 @@ def add_ideal(ans, title, content, server_dir):
             del content[i]
             break
     content = "".join(content)
-    index = tilte_map[title]
+    index = title
+    title = title_id[index]
+    # index = tilte_map[title]
     # title =
     if index < 10:
         titlefont = ImageFont.truetype(server_dir+'/share/font/STXINGKA.ttf', title_locate[index][2])
