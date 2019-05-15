@@ -9,6 +9,7 @@ import time
 import MySQLdb
 import ConfigParser
 import datetime
+import qrcode
 from flask_cors import CORS
 from untils import generate_logger
 from setting import HOST_PROXY, PORT_PROXY
@@ -337,10 +338,18 @@ def sendstar():
 
 @app.route('/share', methods=['POST'])
 def share():
-    s = json.loads(request.form['share'])['content']
+    form = request.form
+    jtype = form['type']
+    if(jtype == "SC"):
+        return share2(form)
+    if(len(form['lk']) == 0 and random.random() < 0.3):
+        return share2(form)
+    return share(form)
+def share2(form):
+    s = json.loads(form['share'])['content']
     # lk = request.form['lk']
-    yan = request.form['yan']
-    jtype = request.form['type']
+    yan = form['yan']
+    jtype = form['type']
     if(jtype == "SC"):
         yan = int(yan) + 1
     else:
@@ -366,13 +375,13 @@ def share():
     # return render_template("share.html", ans = ans)
     # return render(request, "IdealColor/templates/1.html")
 
-@app.route('/share1', methods=['POST'])
-def share1():
-    s = json.loads(request.form['share'])['content']
-    lk = request.form['lk']
-    yan = request.form['yan']
-    jtype = request.form['type']
-    tt = request.form['tt']
+# @app.route('/share1', methods=['POST'])
+def share1(form):
+    s = json.loads(form['share'])['content']
+    lk = form['lk']
+    yan = form['yan']
+    jtype = form['type']
+    tt = form['tt']
     if(len(lk) == 0):
         lk = u'九歌作'
     # print(s)
@@ -490,6 +499,8 @@ def add_ideal(ans, yan, jtype, tt, ideal, lk = u'九歌作'):
     time_str = str(time.time())
     filename = '/share/new/' + time_str + '.jpg'
     im.save(server_dir+filename)
+    img = qrcode.make("https://jiuge.thunlp.cn/pic_share/"+time_str+".jpg")
+    img.save(server_dir + filename.replace(".jpg", "ew.jpg"))
     return time_str + '.jpg'
 
 
