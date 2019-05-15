@@ -114,7 +114,7 @@ def add_ideal(ans, title, content, server_dir):
     # index = tilte_map[title]
     print(content)
     for i in range(len(content)):
-        if(content[i] == "-"):
+        if(content[i] == u"-"):
             del content[i]
             break
     content = "".join(content)
